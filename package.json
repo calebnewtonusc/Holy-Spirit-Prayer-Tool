@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "@elevenlabs/elevenlabs-js": "^2.38.1",
-    "@elevenlabs/react": "^0.3.0",
+    "@elevenlabs/react": "^0.14.2",
+    "@vercel/analytics": "^2.0.1",
     "autoprefixer": "^10.4.27",
     "dotenv": "^16.4.5",
     "next": "^15.5.12",
