@@ -179,3 +179,5 @@ If a user expresses panic, severe spiritual confusion, or crisis, the AI agent i
 
 - **Erik Fish** — Founder of Student Church Movement, author of *Pocket Disciple*, disciple-maker. The guiding method, theology, and voice behind this tool. [erikfish.com](https://erikfish.com/)
 - **Caleb Newton** — Builder. [calebnewton.me](https://calebnewton.me/)
+
+All glory to God! ✝️❤️
