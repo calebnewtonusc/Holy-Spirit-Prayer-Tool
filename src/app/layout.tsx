@@ -1,28 +1,45 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata, Viewport } from "next";
+import { Bricolage_Grotesque, Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import "./globals.css";
+
+const display = Bricolage_Grotesque({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const body = Inter({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Holy Spirit Guided Prayer Tool",
+  title: "Ask for the Fire | Holy Spirit Prayer Guide",
   description:
-    "A scripture-rooted guided prayer experience for Christians who want calm, biblical help seeking the gifts of the Holy Spirit, including tongues. No pressure. No hype. Just a guided path.",
+    "A voice guide, built from Erik Fish's teaching, that walks you through asking Jesus for the baptism of the Holy Spirit, including praying in tongues for the first time. Scripture first. No pressure.",
   openGraph: {
-    title: "Holy Spirit Guided Prayer Tool",
+    title: "Ask for the Fire",
     description:
-      "Seek the gifts of the Holy Spirit with peace, scripture, and guidance.",
+      "A calm voice guide through Luke 11:13: how much more will your Father give the Holy Spirit to those who ask.",
     type: "website",
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const viewport: Viewport = {
+  themeColor: "#0c0806",
+  width: "device-width",
+  initialScale: 1,
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body>{children}  <Analytics />
-</body>
+    <html lang="en" className={`${display.variable} ${body.variable}`}>
+      <body className="font-sans">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

@@ -1,63 +1,66 @@
+import type { Metadata } from "next";
+import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import ConversationAgent from "@/components/ConversationAgent";
+import Session from "@/components/Session";
 
-const agentId = process.env.NEXT_PUBLIC_ELEVENLABS_GUIDE_AGENT_ID ?? "";
+export const metadata: Metadata = {
+  title: "Lead a friend | Ask for the Fire",
+  description: "A voice coach for walking a friend through asking Jesus for the Holy Spirit.",
+};
+
+const CAUTIONS = [
+  "Never feed them syllables or repeat sounds at them.",
+  "Don't fill the silence while they pray. Give it real time.",
+  "Never grade whether their experience counted.",
+  "Point them to Jesus, not to you and not to an outcome.",
+];
 
 export default function GuidePage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <Nav />
-
-      <main className="pt-32 pb-24 px-6">
-        <div className="max-w-xl mx-auto">
-
-          <div className="text-center mb-16">
-            <p className="text-sm font-medium text-[#b5621a] mb-4 tracking-wide">Guide Mode</p>
-            <h1 className="text-4xl md:text-5xl font-bold text-[#1d1d1f] tracking-tight mb-5">
-              Walk someone through it.
+      <main className="px-4 pb-24 pt-28 sm:px-6 sm:pt-36">
+        <div className="mx-auto max-w-2xl">
+          <div className="text-center">
+            <p className="text-xs font-medium uppercase tracking-[0.25em] text-ember-light">Leader Mode</p>
+            <h1 className="mt-5 font-display text-5xl font-semibold tracking-[-0.03em] text-bone sm:text-6xl">
+              Walk a friend through it.
             </h1>
-            <p className="text-lg text-[#6e6e73] leading-relaxed">
-              The coach gives you scripts and step-by-step guidance based on how
-              Erik Fish leads this experience in person. You speak out loud. Your
-              friend walks with you.
+            <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-ash">
+              A coach built from how Erik leads this in person. Prep with it beforehand, or keep it on speaker while you
+              pray together.
             </p>
           </div>
 
-          <div className="bg-[#f5f5f7] rounded-3xl py-16 px-8 mb-16">
-            <ConversationAgent agentId={agentId} mode="guide" />
-          </div>
-
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-7 mb-10">
-            <p className="text-xs font-bold text-[#b5621a] uppercase tracking-widest mb-4">
-              Critical cautions
-            </p>
-            <div className="space-y-3">
-              {[
-                "Never prompt specific syllables or repeat sounds at the person.",
-                "Never fill the silence during the practice window. Give 3 to 5 full minutes.",
-                "Never evaluate whether their experience was valid.",
-                "Point them to Jesus, not to you, not to an outcome.",
-              ].map((c, i) => (
-                <div key={i} className="flex items-start gap-3">
-                  <span className="mt-2 w-1 h-1 rounded-full bg-[#b5621a] shrink-0" />
-                  <p className="text-sm text-[#92400e] leading-relaxed">{c}</p>
-                </div>
-              ))}
+          <div className="relative mt-14 overflow-hidden rounded-[2rem] border border-bone/[0.08] bg-coal/70 px-6 py-14 shadow-[0_40px_120px_-40px_rgb(var(--ember)/0.45)] sm:px-10">
+            <div className="pointer-events-none absolute -bottom-32 left-1/2 h-64 w-[120%] -translate-x-1/2 rounded-full bg-ember/20 blur-3xl" />
+            <div className="relative">
+              <Session mode="guide" />
             </div>
           </div>
 
-          <p className="text-sm text-[#6e6e73] text-center">
-            After your session, visit{" "}
-            <a href="/follow-up" className="text-[#b5621a] font-medium hover:underline">
-              Follow-Up Plans
-            </a>{" "}
-            to give your friend a 3-day or 7-day next steps plan.
-          </p>
+          <div className="mt-14 rounded-3xl border border-ember/25 bg-ember/[0.06] p-7 sm:p-9">
+            <p className="text-xs font-medium uppercase tracking-[0.25em] text-ember-light">Four things to never do</p>
+            <ul className="mt-5 space-y-3">
+              {CAUTIONS.map((c) => (
+                <li key={c} className="flex items-start gap-3 text-bone/90">
+                  <span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ember" />
+                  {c}
+                </li>
+              ))}
+            </ul>
+          </div>
 
+          <p className="mt-10 text-center text-sm text-ash">
+            Afterward, send your friend the{" "}
+            <Link href="/follow-up" className="font-medium text-ember-light underline decoration-ember-light/30 underline-offset-4 transition hover:decoration-ember-light">
+              7-day plan
+            </Link>{" "}
+            and check in on day three.
+          </p>
         </div>
       </main>
-
       <Footer />
     </div>
   );

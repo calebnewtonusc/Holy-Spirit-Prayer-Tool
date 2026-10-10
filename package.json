@@ -5,13 +5,13 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p ${PORT:-3000}",
     "lint": "next lint",
-    "setup:agent": "npx tsx scripts/setup-elevenlabs-agent.ts"
+    "agents:update": "npx tsx scripts/update-agents.ts"
   },
   "dependencies": {
-    "@elevenlabs/elevenlabs-js": "^2.38.1",
-    "@elevenlabs/react": "^0.14.2",
+    "@elevenlabs/elevenlabs-js": "^2.71.0",
+    "@elevenlabs/react": "^1.17.0",
     "@vercel/analytics": "^2.0.1",
     "autoprefixer": "^10.4.27",
     "dotenv": "^16.4.5",

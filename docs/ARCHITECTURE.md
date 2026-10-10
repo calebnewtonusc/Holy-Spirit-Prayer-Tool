@@ -1,8 +1,10 @@
 # Technical Architecture
 
+> Written for the March 2026 version. The October 2026 rebuild moved hosting to Railway, sessions to server-minted tokens (`src/app/api/session/route.ts`), the voice UI to `src/components/Session.tsx` and `Flame.tsx`, and the agents to Claude Sonnet 5.5 with `eleven_v3_conversational`. The README's "How it works" section is current.
+
 ## Core Design Principle
 
-**Everything is LLM.** The AI voice agent IS the experience — not a helper or a chatbot layer on top of a hardcoded UI. The agent holds the full theology, guiding method, scriptures, fear-handling, and pastoral wisdom. The UI exists to frame, launch, and support the agent.
+**Everything is LLM.** The AI voice agent IS the experience , not a helper or a chatbot layer on top of a hardcoded UI. The agent holds the full theology, guiding method, scriptures, fear-handling, and pastoral wisdom. The UI exists to frame, launch, and support the agent.
 
 ---
 
@@ -30,10 +32,10 @@ Two separate ElevenLabs Conversational AI agents:
 - **Session max:** 60 minutes
 
 ### Agent 2: `NEXT_PUBLIC_ELEVENLABS_GUIDE_AGENT_ID`
-- **Name:** Holy Spirit Prayer Guide — Leader Mode
+- **Name:** Holy Spirit Prayer Guide , Leader Mode
 - **Purpose:** Coach for leaders walking others through the experience
 - **System prompt:** 10-step facilitation guide with scripts, cautions, and coaching
-- **Voice:** Rachel (same — consistent brand)
+- **Voice:** Rachel (same , consistent brand)
 
 Both agents are created programmatically via `scripts/setup-elevenlabs-agent.ts`.
 
@@ -54,8 +56,8 @@ Both agents are created programmatically via `scripts/setup-elevenlabs-agent.ts`
 
 All content is in `src/data/`:
 
-- **`agentPrompts.ts`** — The full system prompts for both agents. This is the most important file. All theology, all of Erik's method, all guiding phrases live here.
-- **`content.ts`** — Scriptures, prayers, fears, follow-up plans, testimonies. Used by static pages and as backup reference.
+- **`agentPrompts.ts`** , The full system prompts for both agents. This is the most important file. All theology, all of Erik's method, all guiding phrases live here.
+- **`content.ts`** , Scriptures, prayers, fears, follow-up plans, testimonies. Used by static pages and as backup reference.
 
 ---
 

@@ -1,54 +1,61 @@
+import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import ConversationAgent from "@/components/ConversationAgent";
+import Session from "@/components/Session";
 
-const agentId = process.env.NEXT_PUBLIC_ELEVENLABS_AGENT_ID ?? "";
+export const metadata: Metadata = {
+  title: "Pray | Ask for the Fire",
+  description: "A voice-guided session asking Jesus for the baptism of the Holy Spirit.",
+};
+
+const EXPECT = [
+  ["Settle in", "The guide checks you're somewhere quiet and asks where you are with Jesus."],
+  ["Scripture", "Jesus' promise in Luke 11, Pentecost in Acts 2, and Paul on praying with your spirit."],
+  ["Questions", "Anything you're afraid of or unsure about, said out loud and answered."],
+  ["The prayer", "You ask your Father for the Holy Spirit, phrase by phrase."],
+  ["Practice", "You stop praying in English and let whatever comes, come. The guide waits quietly."],
+  ["What next", "How to keep going daily, and who to tell."],
+] as const;
 
 export default function JourneyPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <Nav />
-
-      <main className="pt-32 pb-24 px-6">
-        <div className="max-w-xl mx-auto">
-
-          <div className="text-center mb-16">
-            <p className="text-sm font-medium text-[#b5621a] mb-4 tracking-wide">The Journey</p>
-            <h1 className="text-4xl md:text-5xl font-bold text-[#1d1d1f] tracking-tight mb-5">
-              Your guide is ready.
+      <main className="px-4 pb-24 pt-28 sm:px-6 sm:pt-36">
+        <div className="mx-auto max-w-2xl">
+          <div className="text-center">
+            <p className="text-xs font-medium uppercase tracking-[0.25em] text-ember-light">Guided prayer</p>
+            <h1 className="mt-5 font-display text-5xl font-semibold tracking-[-0.03em] text-bone sm:text-6xl">
+              Come as you are.
             </h1>
-            <p className="text-lg text-[#6e6e73] leading-relaxed">
-              Find a quiet place. The guide will walk you through scripture,
-              prayer, and your first practice at your own pace.
+            <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-ash">
+              You&apos;ll talk out loud, and the guide talks back. When it&apos;s time to pray, it goes quiet and lets
+              you.
             </p>
           </div>
 
-          <div className="bg-[#f5f5f7] rounded-3xl py-16 px-8 mb-16">
-            <ConversationAgent agentId={agentId} mode="journey" />
+          <div className="relative mt-14 overflow-hidden rounded-[2rem] border border-bone/[0.08] bg-coal/70 px-6 py-14 shadow-[0_40px_120px_-40px_rgb(var(--ember)/0.45)] sm:px-10">
+            <div className="pointer-events-none absolute -bottom-32 left-1/2 h-64 w-[120%] -translate-x-1/2 rounded-full bg-ember/20 blur-3xl" />
+            <div className="relative">
+              <Session mode="journey" />
+            </div>
           </div>
 
-          <div className="space-y-3">
-            <p className="text-xs font-bold text-[#aeaeb2] uppercase tracking-widest mb-4">
-              What to expect
-            </p>
-            {[
-              "The guide orients you and makes sure you feel safe.",
-              "You are grounded in what the Bible says about the Holy Spirit.",
-              "You have space to share any fears or questions.",
-              "You are led into a prayer of empowerment.",
-              "You are guided through first practice, praying with your spirit.",
-              "You reflect and receive a clear next step.",
-            ].map((item, i) => (
-              <div key={i} className="flex items-start gap-3">
-                <span className="mt-2 w-1 h-1 rounded-full bg-[#aeaeb2] shrink-0" />
-                <p className="text-sm text-[#6e6e73] leading-relaxed">{item}</p>
-              </div>
+          <ol className="mt-16 space-y-1">
+            {EXPECT.map(([title, body], i) => (
+              <li key={title} className="flex gap-5 rounded-2xl px-4 py-4 transition hover:bg-bone/[0.03]">
+                <span className="w-6 shrink-0 pt-0.5 font-display text-sm font-semibold tabular-nums text-ember-light">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <p className="font-medium text-bone">{title}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-ash">{body}</p>
+                </div>
+              </li>
             ))}
-          </div>
-
+          </ol>
         </div>
       </main>
-
       <Footer />
     </div>
   );

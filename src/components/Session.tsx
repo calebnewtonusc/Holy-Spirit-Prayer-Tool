@@ -1,0 +1,288 @@
+"use client";
+import Link from "next/link";
+import { ConversationProvider, useConversation } from "@elevenlabs/react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Flame, { type FlameLevels } from "./Flame";
+
+type Mode = "journey" | "guide";
+type Phase = "ready" | "connecting" | "live" | "ended";
+
+interface SessionProps {
+  mode: Mode;
+}
+
+const COPY: Record<
+  Mode,
+  { ready: string; sub: string; start: string; ended: string }
+> = {
+  journey: {
+    ready: "Your guide is ready.",
+    sub: "Find somewhere quiet. Headphones help. Plan on about twenty unhurried minutes.",
+    start: "Begin with the guide",
+    ended: "Keep asking. Keep praying.",
+  },
+  guide: {
+    ready: "Your coach is ready.",
+    sub: "Use it before you meet your friend, or put it on speaker and do it together.",
+    start: "Start Leader Mode",
+    ended: "Now go walk someone through it.",
+  },
+};
+
+export default function Session({ mode }: SessionProps) {
+  return (
+    <ConversationProvider>
+      <SessionInner mode={mode} />
+    </ConversationProvider>
+  );
+}
+
+function SessionInner({ mode }: SessionProps) {
+  const [phase, setPhase] = useState<Phase>("ready");
+  const [error, setError] = useState<string | null>(null);
+  const [caption, setCaption] = useState("");
+  const [seconds, setSeconds] = useState(0);
+  const wakeLock = useRef<WakeLockSentinel | null>(null);
+  const copy = COPY[mode];
+
+  const conversation = useConversation({
+    onConnect: () => {
+      setError(null);
+      setPhase("live");
+    },
+    onDisconnect: () => setPhase((p) => (p === "live" ? "ended" : p)),
+    onMessage: ({ message, role }) => {
+      if (role === "agent") setCaption(message);
+    },
+    onError: (message) => {
+      setError(
+        typeof message === "string" && message
+          ? message
+          : "The connection dropped. Try again.",
+      );
+    },
+  });
+
+  const conversationRef = useRef(conversation);
+  conversationRef.current = conversation;
+
+  const getLevels = useCallback((): FlameLevels => {
+    const c = conversationRef.current;
+    if (c.status !== "connected") return { agent: 0, user: 0 };
+    return {
+      agent: Math.min(c.getOutputVolume() * 2.2, 1),
+      user: Math.min(c.getInputVolume() * 2.6, 1),
+    };
+  }, []);
+
+  // Phones sleep mid-prayer otherwise, which ends the session on iOS.
+  useEffect(() => {
+    if (phase !== "live") return;
+    navigator.wakeLock
+      ?.request("screen")
+      .then((lock) => (wakeLock.current = lock))
+      .catch(() => undefined);
+    const timer = setInterval(() => setSeconds((s) => s + 1), 1000);
+    return () => {
+      clearInterval(timer);
+      wakeLock.current?.release().catch(() => undefined);
+      wakeLock.current = null;
+    };
+  }, [phase]);
+
+  const start = useCallback(async () => {
+    setError(null);
+    setCaption("");
+    setSeconds(0);
+    setPhase("connecting");
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch {
+      setPhase("ready");
+      setError(
+        "The guide needs your microphone. Allow it in your browser, then try again.",
+      );
+      return;
+    }
+    try {
+      const res = await fetch(`/api/session?mode=${mode}`, {
+        cache: "no-store",
+      });
+      const body: unknown = await res.json().catch(() => null);
+      const record =
+        typeof body === "object" && body !== null
+          ? (body as Record<string, unknown>)
+          : {};
+      if (!res.ok || typeof record.token !== "string") {
+        throw new Error(
+          typeof record.error === "string"
+            ? record.error
+            : "The guide couldn't connect just now.",
+        );
+      }
+      conversation.startSession({
+        conversationToken: record.token,
+        connectionType: "webrtc",
+      });
+    } catch (e) {
+      setPhase("ready");
+      setError(
+        e instanceof Error ? e.message : "The guide couldn't connect just now.",
+      );
+    }
+  }, [conversation, mode]);
+
+  const end = useCallback(() => {
+    conversation.endSession();
+    setPhase("ended");
+  }, [conversation]);
+
+  const live = phase === "live" || phase === "connecting";
+  const minutes = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
+
+  if (live) {
+    return (
+      <div
+        className="fixed inset-0 z-50 flex flex-col bg-ink animate-fade-in"
+        role="dialog"
+        aria-label="Prayer session"
+      >
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[78dvh]">
+          <Flame
+            getLevels={getLevels}
+            idle={phase === "connecting" ? 0.12 : 0.28}
+          />
+        </div>
+
+        <header className="relative flex items-center justify-between px-5 pt-[max(1.25rem,env(safe-area-inset-top))] sm:px-8">
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-smoke">
+            {mode === "guide" ? "Leader Mode" : "Guided prayer"}
+          </span>
+          <span className="flex items-center gap-2 text-xs tabular-nums text-ash">
+            <span
+              className={`h-1.5 w-1.5 rounded-full ${phase === "live" ? "bg-ember-light animate-pulse" : "bg-smoke"}`}
+            />
+            {phase === "live" ? minutes : "Connecting"}
+          </span>
+        </header>
+
+        <main className="relative flex flex-1 items-start justify-center px-6 pt-[12dvh]">
+          <p
+            key={caption}
+            aria-live="polite"
+            className="max-w-2xl text-balance text-center font-display text-2xl leading-snug text-bone/90 animate-fade-up sm:text-3xl"
+          >
+            {phase === "connecting"
+              ? "Take a breath."
+              : caption ||
+                (conversation.isSpeaking ? "" : "Speak whenever you're ready.")}
+          </p>
+        </main>
+
+        <footer className="relative flex flex-col items-center gap-4 px-6 pb-[max(2rem,env(safe-area-inset-bottom))]">
+          <p className="text-sm text-ash">
+            {phase !== "live"
+              ? "Connecting to your guide"
+              : conversation.isMuted
+                ? "Your mic is off"
+                : conversation.isSpeaking
+                  ? "Listen and let it settle"
+                  : "Listening. Take your time"}
+          </p>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => conversation.setMuted(!conversation.isMuted)}
+              disabled={phase !== "live"}
+              className="rounded-full border border-bone/15 bg-ink/50 px-5 py-3 text-sm font-medium text-bone backdrop-blur-md transition hover:border-bone/35 hover:bg-ink/70 disabled:opacity-40"
+            >
+              {conversation.isMuted ? "Unmute" : "Mute"}
+            </button>
+            <button
+              type="button"
+              onClick={end}
+              className="rounded-full bg-bone px-6 py-3 text-sm font-semibold text-ink transition hover:bg-white active:scale-95"
+            >
+              End session
+            </button>
+          </div>
+          {error && (
+            <p className="max-w-sm text-center text-sm text-ember-light">
+              {error}
+            </p>
+          )}
+        </footer>
+      </div>
+    );
+  }
+
+  if (phase === "ended") {
+    return (
+      <div className="text-center animate-fade-up">
+        <p className="text-xs font-medium uppercase tracking-[0.2em] text-ember-light">
+          Session complete
+        </p>
+        <h3 className="mt-4 font-display text-3xl font-semibold tracking-tight text-bone sm:text-4xl">
+          {copy.ended}
+        </h3>
+        <p className="mx-auto mt-4 max-w-md text-ash">
+          &ldquo;How much more will your Father in heaven give the Holy Spirit
+          to those who ask him!&rdquo; Luke 11:13
+        </p>
+        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <Link
+            href="/follow-up"
+            className="w-full rounded-full bg-ember px-7 py-3.5 text-sm font-semibold text-ink transition hover:bg-ember-light sm:w-auto"
+          >
+            Open the 7-day plan
+          </Link>
+          <Link
+            href={mode === "guide" ? "/journey" : "/guide"}
+            className="w-full rounded-full border border-bone/15 px-7 py-3.5 text-sm font-semibold text-bone transition hover:border-bone/40 hover:bg-bone/5 sm:w-auto"
+          >
+            {mode === "guide"
+              ? "Do it yourself first"
+              : "Walk a friend through it"}
+          </Link>
+          <button
+            type="button"
+            onClick={start}
+            className="w-full rounded-full px-5 py-3.5 text-sm font-medium text-ash transition hover:text-bone sm:w-auto"
+          >
+            Start again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="text-center">
+      <h3 className="font-display text-3xl font-semibold tracking-tight text-bone">
+        {copy.ready}
+      </h3>
+      <p className="mx-auto mt-3 max-w-sm leading-relaxed text-ash">
+        {copy.sub}
+      </p>
+      {error && (
+        <p
+          role="alert"
+          className="mx-auto mt-6 max-w-sm rounded-2xl border border-ember/30 bg-ember/10 px-5 py-3 text-sm text-ember-light"
+        >
+          {error}
+        </p>
+      )}
+      <button
+        type="button"
+        onClick={start}
+        className="group mt-8 inline-flex items-center gap-3 rounded-full bg-bone px-8 py-4 text-base font-semibold text-ink shadow-[0_0_60px_-10px_rgb(var(--ember)/0.7)] transition hover:bg-white hover:shadow-[0_0_80px_-6px_rgb(var(--ember)/0.9)] active:scale-[0.98]"
+      >
+        <span className="h-2 w-2 rounded-full bg-ember transition group-hover:scale-125" />
+        {copy.start}
+      </button>
+      <p className="mt-4 text-xs text-smoke">
+        Uses your microphone. Works best in Chrome or Safari.
+      </p>
+    </div>
+  );
+}
