@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export interface FlameLevels {
   agent: number;
@@ -134,6 +134,9 @@ export default function Flame({
   className = "",
 }: FlameProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  // A canvas whose WebGL never started paints white on some browsers, so a
+  // failed start swaps in a plain glow instead (seen headless, 2026-10-10).
+  const [failed, setFailed] = useState(false);
   const levelsRef = useRef(getLevels);
   const sceneRef = useRef(getScene);
   levelsRef.current = getLevels;
@@ -147,7 +150,7 @@ export default function Flame({
       antialias: false,
     });
     if (!gl) {
-      canvas.dataset.fallback = "true";
+      setFailed(true);
       return;
     }
 
@@ -166,7 +169,7 @@ export default function Flame({
     const fs = compile(gl.FRAGMENT_SHADER, FRAGMENT);
     const program = gl.createProgram();
     if (!vs || !fs || !program) {
-      canvas.dataset.fallback = "true";
+      setFailed(true);
       return;
     }
     gl.attachShader(program, vs);
@@ -288,11 +291,20 @@ export default function Flame({
     };
   }, [idle, ignite]);
 
+  if (failed) {
+    return (
+      <div
+        aria-hidden="true"
+        className={`h-full w-full animate-breathe bg-[radial-gradient(38%_55%_at_50%_100%,rgb(var(--ember)/0.6),rgb(var(--ember-deep)/0.25)_55%,transparent_75%)] ${className}`}
+      />
+    );
+  }
+
   return (
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className={`block h-full w-full data-[fallback=true]:bg-[radial-gradient(40%_50%_at_50%_100%,rgb(var(--ember)/0.55),transparent_70%)] ${className}`}
+      className={`block h-full w-full ${className}`}
     />
   );
 }

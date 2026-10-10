@@ -92,8 +92,9 @@ function SessionInner({ mode }: SessionProps) {
     };
   }, [phase]);
 
-  // Someone praying out loud while the guide stays quiet: after a few seconds
-  // of that, the screen says so, so the silence reads as company, not a hang.
+  // Someone praying out loud while the guide stays quiet: after about twenty
+  // seconds of that, the screen says so, so the silence reads as company. At
+  // four seconds a 2026-10-10 test tripped it on an ordinary spoken answer.
   useEffect(() => {
     if (phase !== "live") {
       setPraying(false);
@@ -108,7 +109,7 @@ function SessionInner({ mode }: SessionProps) {
         return;
       }
       voiced = c.getInputVolume() > 0.05 ? voiced + 1 : Math.max(0, voiced - 1);
-      if (voiced >= 12) setPraying(true);
+      if (voiced >= 66) setPraying(true);
     }, 300);
     return () => clearInterval(timer);
   }, [phase]);
@@ -269,7 +270,7 @@ function SessionInner({ mode }: SessionProps) {
     return (
       <div className="text-center animate-fade-up">
         <p className="kicker">Session complete</p>
-        <h3 className="mt-4 font-display text-3xl font-semibold tracking-tight text-bone sm:text-4xl">
+        <h3 className="mt-4 font-display text-3xl font-normal tracking-[-0.02em] text-bone sm:text-4xl">
           {copy.ended}
         </h3>
         <p className="mx-auto mt-4 max-w-md text-ash">
@@ -312,7 +313,7 @@ function SessionInner({ mode }: SessionProps) {
 
   return (
     <div className="text-center">
-      <h3 className="font-display text-3xl font-semibold tracking-tight text-bone">
+      <h3 className="font-display text-3xl font-normal tracking-[-0.02em] text-bone">
         {copy.ready}
       </h3>
       <p className="mx-auto mt-3 max-w-sm leading-relaxed text-ash">

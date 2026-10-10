@@ -16,9 +16,9 @@ export default function FollowUpPage() {
           {/* ── Header ─────────────────────────────────────────────── */}
           <div className="text-center mb-16 animate-fade-up">
             <p className="kicker mb-5">
-              Follow-Up Plans
+              After your session
             </p>
-            <h1 className="text-4xl md:text-5xl font-bold text-bone tracking-tight mb-5">
+            <h1 className="mb-5 font-display text-5xl font-normal tracking-[-0.03em] text-bone md:text-6xl">
               Keep going.
             </h1>
             <p className="text-lg text-ash leading-relaxed max-w-lg mx-auto">
@@ -30,7 +30,7 @@ export default function FollowUpPage() {
           {/* ── 3-Day Plan ──────────────────────────────────────────── */}
           <section className="mb-20">
             <div className="flex items-center gap-4 mb-8">
-              <h2 className="text-2xl font-bold text-bone tracking-tight">
+              <h2 className="font-display text-2xl font-normal tracking-[-0.02em] text-bone sm:text-3xl">
                 3-Day Plan
               </h2>
               <span className="text-xs font-semibold text-ash bg-coal px-3 py-1.5 rounded-full">
@@ -109,7 +109,7 @@ export default function FollowUpPage() {
           {/* ── 7-Day Plan ──────────────────────────────────────────── */}
           <section className="mb-16">
             <div className="flex items-center gap-4 mb-8">
-              <h2 className="text-2xl font-bold text-bone tracking-tight">
+              <h2 className="font-display text-2xl font-normal tracking-[-0.02em] text-bone sm:text-3xl">
                 7-Day Plan
               </h2>
               <span className="text-xs font-semibold text-ash bg-coal px-3 py-1.5 rounded-full">
@@ -128,7 +128,7 @@ export default function FollowUpPage() {
                       <span className="block text-xs font-bold text-smoke">
                         Day
                       </span>
-                      <span className="block text-2xl font-bold text-bone leading-tight">
+                      <span className="block font-display text-2xl font-normal leading-tight text-bone">
                         {day.day}
                       </span>
                     </div>
@@ -143,7 +143,7 @@ export default function FollowUpPage() {
                       </div>
                       <p className="scripture-text text-sm text-ash leading-relaxed">
                         &ldquo;{day.scripture.text}&rdquo;
-                        <span className="not-italic font-semibold text-ember-light ml-2">, {day.scripture.ref}
+                        <span className="not-italic font-semibold text-ember-light ml-2">{day.scripture.ref}
                         </span>
                       </p>
                     </div>
@@ -155,7 +155,7 @@ export default function FollowUpPage() {
 
           {/* ── Multiplication CTA ──────────────────────────────────── */}
           <div className="bg-char border border-ember/20 rounded-2xl p-10 text-center text-bone">
-            <h3 className="text-2xl font-bold tracking-tight mb-4">
+            <h3 className="mb-4 font-display text-2xl font-normal tracking-[-0.02em]">
               Walk someone else through it.
             </h3>
             <p className="text-smoke text-base leading-relaxed mb-8 max-w-sm mx-auto">

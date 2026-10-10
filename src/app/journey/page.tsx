@@ -25,7 +25,7 @@ export default function JourneyPage() {
         <div className="mx-auto max-w-2xl">
           <div className="text-center">
             <p className="kicker">Guided prayer</p>
-            <h1 className="mt-5 font-display text-5xl font-semibold tracking-[-0.03em] text-bone sm:text-6xl">
+            <h1 className="mt-5 font-display text-5xl font-normal tracking-[-0.03em] text-bone sm:text-6xl">
               Come as you are.
             </h1>
             <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-ash">

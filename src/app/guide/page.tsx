@@ -24,7 +24,7 @@ export default function GuidePage() {
         <div className="mx-auto max-w-2xl">
           <div className="text-center">
             <p className="kicker">Leader Mode</p>
-            <h1 className="mt-5 font-display text-5xl font-semibold tracking-[-0.03em] text-bone sm:text-6xl">
+            <h1 className="mt-5 font-display text-5xl font-normal tracking-[-0.03em] text-bone sm:text-6xl">
               Walk a friend through it.
             </h1>
             <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-ash">

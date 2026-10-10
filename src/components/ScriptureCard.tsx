@@ -42,7 +42,7 @@ export default function ScriptureCard({
         <p className="scripture-text text-base text-bone leading-relaxed mb-2">
           &ldquo;{text}&rdquo;
         </p>
-        <span className="text-xs font-semibold text-ember-light">, {reference} ({translation})
+        <span className="text-xs font-semibold text-ember-light">{reference} ({translation})
         </span>
       </div>
     );
