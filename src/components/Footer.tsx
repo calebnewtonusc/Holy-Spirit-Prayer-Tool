@@ -32,6 +32,7 @@ export default function Footer() {
           <div className="flex items-center gap-6 text-sm text-ash">
             <Link href="/journey" className="transition hover:text-bone">Pray</Link>
             <Link href="/guide" className="transition hover:text-bone">Lead a friend</Link>
+            <Link href="/questions" className="transition hover:text-bone">Questions</Link>
             <Link href="/follow-up" className="transition hover:text-bone">7-day plan</Link>
           </div>
         </div>

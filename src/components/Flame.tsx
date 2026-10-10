@@ -23,6 +23,8 @@ interface FlameProps {
   getLevels?: () => FlameLevels;
   /** Read every frame; the scroll story drives this on the landing page. */
   getScene?: () => FlameScene;
+  /** A fixed scene, for server-rendered pages that can't pass a function. */
+  scene?: FlameScene;
   /** Resting intensity when there is no scene and nobody is speaking. */
   idle?: number;
   /** Seconds for the spark to catch on first paint. 0 skips the intro. */
@@ -126,6 +128,7 @@ const DEFAULT_SCENE: FlameScene = {
 export default function Flame({
   getLevels,
   getScene,
+  scene,
   idle = 0.25,
   ignite = 0,
   className = "",
@@ -134,7 +137,7 @@ export default function Flame({
   const levelsRef = useRef(getLevels);
   const sceneRef = useRef(getScene);
   levelsRef.current = getLevels;
-  sceneRef.current = getScene;
+  sceneRef.current = getScene ?? (scene ? () => scene : undefined);
 
   useEffect(() => {
     const canvas = canvasRef.current;
