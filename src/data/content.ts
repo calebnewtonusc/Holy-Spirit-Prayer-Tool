@@ -402,34 +402,6 @@ export const followUpPlans = {
   ],
 };
 
-// ─── Testimonies ──────────────────────────────────────────────────────────────
-export const testimonies = [
-  {
-    type: "immediate",
-    name: "Sarah, 22",
-    story:
-      "I had been curious for years but too embarrassed to ask. I sat quietly, read through the scriptures, and just asked simply. Within a few minutes I started speaking, it surprised me completely. I cried the whole time. It felt like something I had been waiting for without knowing I was waiting.",
-  },
-  {
-    type: "gradual",
-    name: "Marcus, 34",
-    story:
-      "Nothing happened the first time. Or the second. I almost stopped. But around day five of praying consistently, something small started, just a few repeated sounds. It's grown since then. Looking back, I think God was working on my trust more than my tongue.",
-  },
-  {
-    type: "simple",
-    name: "Priya, 19",
-    story:
-      "I expected something dramatic. What happened was very quiet. Just a deep peace, and a few syllables. My campus minister told me not to overthink it. So I didn't. I kept going. Three weeks later it flows naturally during prayer.",
-  },
-  {
-    type: "communal",
-    name: "James, 41",
-    story:
-      "I went through this with a friend from my small group. He read the guide out loud to me. Having someone beside me made all the difference. We prayed together and both of us experienced something that day. Now we walk others through it.",
-  },
-];
-
 // ─── Guide Mode Steps ─────────────────────────────────────────────────────────
 // Based on how Erik Fish personally guides people, from the recorded conversation
 export const guideSteps = [

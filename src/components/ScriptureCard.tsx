@@ -23,7 +23,7 @@ export default function ScriptureCard({
           <span className="text-sm font-semibold text-ember-light">
             {reference}
           </span>
-          <span className="text-xs text-smoke uppercase tracking-wider">
+          <span className="text-xs text-smoke">
             {translation}
           </span>
         </div>
@@ -55,7 +55,7 @@ export default function ScriptureCard({
       </p>
       <div className="flex items-center justify-between">
         <span className="text-sm font-semibold text-ember-light">{reference}</span>
-        <span className="text-xs text-smoke uppercase tracking-wider">
+        <span className="text-xs text-smoke">
           {translation}
         </span>
       </div>

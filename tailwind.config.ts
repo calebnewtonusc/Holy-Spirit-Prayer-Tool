@@ -26,12 +26,17 @@ const config: Config = {
         "fade-in": "fadeIn 0.8s ease-out both",
         "fade-up": "fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both",
         breathe: "breathe 6s ease-in-out infinite",
+        breath: "breath 8s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: { "0%": { opacity: "0" }, "100%": { opacity: "1" } },
         fadeUp: {
           "0%": { opacity: "0", transform: "translateY(16px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        breath: {
+          "0%, 100%": { transform: "scale(0.55)", opacity: "0.35" },
+          "50%": { transform: "scale(1)", opacity: "1" },
         },
         breathe: {
           "0%, 100%": { transform: "scale(1)", opacity: "0.8" },

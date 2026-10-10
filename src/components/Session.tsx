@@ -42,6 +42,8 @@ function SessionInner({ mode }: SessionProps) {
   const [error, setError] = useState<string | null>(null);
   const [caption, setCaption] = useState("");
   const [seconds, setSeconds] = useState(0);
+  const [praying, setPraying] = useState(false);
+  const [shared, setShared] = useState(false);
   const wakeLock = useRef<WakeLockSentinel | null>(null);
   const copy = COPY[mode];
 
@@ -89,6 +91,42 @@ function SessionInner({ mode }: SessionProps) {
       wakeLock.current = null;
     };
   }, [phase]);
+
+  // Someone praying out loud while the guide stays quiet: after a few seconds
+  // of that, the screen says so, so the silence reads as company, not a hang.
+  useEffect(() => {
+    if (phase !== "live") {
+      setPraying(false);
+      return;
+    }
+    let voiced = 0;
+    const timer = setInterval(() => {
+      const c = conversationRef.current;
+      if (c.isSpeaking) {
+        voiced = 0;
+        setPraying(false);
+        return;
+      }
+      voiced = c.getInputVolume() > 0.05 ? voiced + 1 : Math.max(0, voiced - 1);
+      if (voiced >= 12) setPraying(true);
+    }, 300);
+    return () => clearInterval(timer);
+  }, [phase]);
+
+  const share = useCallback(async () => {
+    const url = `${window.location.origin}/journey`;
+    const text = "This walked me through asking Jesus for the Holy Spirit. Try it somewhere quiet.";
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: "Ask for the Fire", text, url });
+      } else {
+        await navigator.clipboard.writeText(`${text} ${url}`);
+      }
+      setShared(true);
+    } catch {
+      // Closing the share sheet is not an error worth showing.
+    }
+  }, []);
 
   const start = useCallback(async () => {
     setError(null);
@@ -155,9 +193,7 @@ function SessionInner({ mode }: SessionProps) {
         </div>
 
         <header className="relative flex items-center justify-between px-5 pt-[max(1.25rem,env(safe-area-inset-top))] sm:px-8">
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-smoke">
-            {mode === "guide" ? "Leader Mode" : "Guided prayer"}
-          </span>
+          <span className="kicker">{mode === "guide" ? "Leader Mode" : "Guided prayer"}</span>
           <span className="flex items-center gap-2 text-xs tabular-nums text-ash">
             <span
               className={`h-1.5 w-1.5 rounded-full ${phase === "live" ? "bg-ember-light animate-pulse" : "bg-smoke"}`}
@@ -167,16 +203,27 @@ function SessionInner({ mode }: SessionProps) {
         </header>
 
         <main className="relative flex flex-1 items-start justify-center px-6 pt-[12dvh]">
-          <p
-            key={caption}
-            aria-live="polite"
-            className="max-w-2xl text-balance text-center font-display text-2xl leading-snug text-bone/90 animate-fade-up sm:text-3xl"
-          >
-            {phase === "connecting"
-              ? "Take a breath."
-              : caption ||
-                (conversation.isSpeaking ? "" : "Speak whenever you're ready.")}
-          </p>
+          {phase === "connecting" ? (
+            <div className="flex flex-col items-center gap-8 animate-fade-in">
+              <span className="relative grid h-28 w-28 place-items-center">
+                <span className="absolute inset-0 animate-breath rounded-full border border-ember-light/40 bg-ember/10" />
+                <span className="h-2 w-2 rounded-full bg-ember-light" />
+              </span>
+              <p className="font-display text-2xl text-bone/90 sm:text-3xl">Breathe in. Breathe out.</p>
+            </div>
+          ) : (
+            <p
+              key={praying ? "praying" : caption}
+              aria-live="polite"
+              className={`max-w-2xl text-balance text-center font-display leading-snug animate-fade-up ${
+                praying ? "text-xl text-ash sm:text-2xl" : "text-2xl text-bone/90 sm:text-3xl"
+              }`}
+            >
+              {praying
+                ? "Keep going. The guide is waiting with you."
+                : caption || (conversation.isSpeaking ? "" : "Speak whenever you're ready.")}
+            </p>
+          )}
         </main>
 
         <footer className="relative flex flex-col items-center gap-4 px-6 pb-[max(2rem,env(safe-area-inset-bottom))]">
@@ -185,7 +232,9 @@ function SessionInner({ mode }: SessionProps) {
               ? "Connecting to your guide"
               : conversation.isMuted
                 ? "Your mic is off"
-                : conversation.isSpeaking
+                : praying
+                  ? "Praying"
+                  : conversation.isSpeaking
                   ? "Listen and let it settle"
                   : "Listening. Take your time"}
           </p>
@@ -219,9 +268,7 @@ function SessionInner({ mode }: SessionProps) {
   if (phase === "ended") {
     return (
       <div className="text-center animate-fade-up">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-ember-light">
-          Session complete
-        </p>
+        <p className="kicker">Session complete</p>
         <h3 className="mt-4 font-display text-3xl font-semibold tracking-tight text-bone sm:text-4xl">
           {copy.ended}
         </h3>
@@ -246,12 +293,19 @@ function SessionInner({ mode }: SessionProps) {
           </Link>
           <button
             type="button"
-            onClick={start}
-            className="w-full rounded-full px-5 py-3.5 text-sm font-medium text-ash transition hover:text-bone sm:w-auto"
+            onClick={share}
+            className="w-full rounded-full border border-bone/15 px-7 py-3.5 text-sm font-semibold text-bone transition hover:border-bone/40 hover:bg-bone/5 sm:w-auto"
           >
-            Start again
+            {shared ? "Sent. Pray for them" : "Send it to a friend"}
           </button>
         </div>
+        <button
+          type="button"
+          onClick={start}
+          className="mt-4 min-h-11 rounded-full px-5 text-sm font-medium text-ash transition hover:text-bone"
+        >
+          Start again
+        </button>
       </div>
     );
   }

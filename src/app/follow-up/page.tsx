@@ -15,7 +15,7 @@ export default function FollowUpPage() {
 
           {/* ── Header ─────────────────────────────────────────────── */}
           <div className="text-center mb-16 animate-fade-up">
-            <p className="text-sm font-semibold text-ember-light uppercase tracking-widest mb-4">
+            <p className="kicker mb-5">
               Follow-Up Plans
             </p>
             <h1 className="text-4xl md:text-5xl font-bold text-bone tracking-tight mb-5">
@@ -46,7 +46,7 @@ export default function FollowUpPage() {
                 >
                   {/* Day header */}
                   <div className="bg-coal px-7 py-4 flex items-center gap-4">
-                    <span className="text-xs font-bold text-smoke uppercase tracking-widest">
+                    <span className="text-xs font-bold text-smoke">
                       Day {day.day}
                     </span>
                     <h3 className="text-base font-semibold text-bone">
@@ -64,7 +64,7 @@ export default function FollowUpPage() {
 
                     {/* Action */}
                     <div>
-                      <p className="text-xs font-bold text-smoke uppercase tracking-widest mb-2">
+                      <p className="text-xs font-bold text-smoke mb-2">
                         Today&apos;s Action
                       </p>
                       <p className="text-sm text-bone/80 leading-relaxed">
@@ -74,7 +74,7 @@ export default function FollowUpPage() {
 
                     {/* Prayer */}
                     <div className="bg-ember/10 rounded-xl p-5">
-                      <p className="text-xs font-bold text-ember-light uppercase tracking-widest mb-3">
+                      <p className="text-xs font-bold text-ember-light mb-3">
                         Suggested Prayer
                       </p>
                       <p className="prayer-text text-sm text-bone/80 whitespace-pre-line leading-loose">
@@ -84,7 +84,7 @@ export default function FollowUpPage() {
 
                     {/* Reflection */}
                     <div>
-                      <p className="text-xs font-bold text-smoke uppercase tracking-widest mb-2">
+                      <p className="text-xs font-bold text-smoke mb-2">
                         Reflect
                       </p>
                       <p className="text-sm text-ash italic">
@@ -100,7 +100,7 @@ export default function FollowUpPage() {
           {/* ── Divider ─────────────────────────────────────────────── */}
           <div className="flex items-center gap-5 mb-14">
             <div className="flex-1 h-px bg-bone/10" />
-            <span className="text-xs text-smoke uppercase tracking-widest">
+            <span className="text-xs text-smoke">
               Going deeper
             </span>
             <div className="flex-1 h-px bg-bone/10" />
@@ -125,7 +125,7 @@ export default function FollowUpPage() {
                 >
                   <div className="flex items-start gap-5">
                     <div className="flex-shrink-0 text-center">
-                      <span className="block text-xs font-bold text-smoke uppercase tracking-widest">
+                      <span className="block text-xs font-bold text-smoke">
                         Day
                       </span>
                       <span className="block text-2xl font-bold text-bone leading-tight">

@@ -23,7 +23,7 @@ export default function GuidePage() {
       <main className="px-4 pb-24 pt-28 sm:px-6 sm:pt-36">
         <div className="mx-auto max-w-2xl">
           <div className="text-center">
-            <p className="text-xs font-medium uppercase tracking-[0.25em] text-ember-light">Leader Mode</p>
+            <p className="kicker">Leader Mode</p>
             <h1 className="mt-5 font-display text-5xl font-semibold tracking-[-0.03em] text-bone sm:text-6xl">
               Walk a friend through it.
             </h1>
@@ -41,7 +41,7 @@ export default function GuidePage() {
           </div>
 
           <div className="mt-14 rounded-3xl border border-ember/25 bg-ember/[0.06] p-7 sm:p-9">
-            <p className="text-xs font-medium uppercase tracking-[0.25em] text-ember-light">Four things to never do</p>
+            <p className="kicker">Four things to never do</p>
             <ul className="mt-5 space-y-3">
               {CAUTIONS.map((c) => (
                 <li key={c} className="flex items-start gap-3 text-bone/90">
