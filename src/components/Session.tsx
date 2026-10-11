@@ -218,7 +218,7 @@ function SessionInner({ mode }: SessionProps) {
   if (live) {
     return (
       <div
-        className="fixed inset-0 z-50 flex flex-col bg-ink/80 animate-fade-in"
+        className="fixed inset-0 z-50 flex flex-col bg-ink animate-fade-in"
         role="dialog"
         aria-label="Prayer session"
       >
