@@ -29,9 +29,10 @@ const COPY: Record<
   },
 };
 
-// Erik's first try on 2026-10-10 was Chrome on his iPhone. It refused the mic
-// and the page said "allow it in your browser", which on iOS points nowhere:
-// Chrome and Safari there take the switch from iOS Settings or the aA menu.
+// Erik's first try on 2026-10-10 was Safari on his iPhone. It refused the mic
+// without ever showing a prompt, and the page said "allow it in your
+// browser", which on iOS points nowhere: a Deny in iPhone Settings blocks
+// every site silently, and Safari keeps the refusal until the page reloads.
 // Festival friends mostly open links inside Instagram, whose browser has no
 // microphone at all, so that case gets named before they tap.
 const IN_APP = /Instagram|FBAN|FBAV|FB_IAB|Line\/|TikTok|musical_ly|Bytedance|LinkedInApp|Snapchat|Twitter/i;
@@ -55,7 +56,7 @@ function micError(err: unknown): string {
   if (isIos()) {
     return /CriOS/.test(navigator.userAgent)
       ? "Chrome can't hear you yet. Open iPhone Settings, tap Chrome, turn on Microphone, then come back and tap Begin."
-      : "Safari can't hear you yet. Tap aA in the address bar, then Website Settings, set Microphone to Allow, and tap Begin.";
+      : "Safari is blocking the microphone. Open iPhone Settings, tap Apps, then Safari, then Microphone, and choose Ask. Then reload this page and tap Begin.";
   }
   return "Your browser blocked the microphone. Click the icon at the left of the address bar, allow the microphone, and try again.";
 }
