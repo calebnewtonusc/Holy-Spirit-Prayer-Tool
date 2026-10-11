@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import Flame from "@/components/Flame";
 import StoryScene from "@/components/StoryScene";
 import Reveal from "@/components/Reveal";
+import ChristCosmic from "@/components/ChristCosmic";
 
 // Reader: a Christian, often a student, who heard about this from a friend or
 // from Erik and is curious and a little nervous. Their questions, in order,
@@ -12,6 +13,8 @@ import Reveal from "@/components/Reveal";
 //   What actually happens?      the pinned session, played on the device
 //   Will it be weird or fake?   beats 4 and 6, and the questions page
 //   Can I share it?             the Pentecost screen and Leader Mode
+//   I know a seeker, not a      Christ Cosmic, Erik's booklet and its
+//   Christian. What then?       breath ceremony
 //   Can I start now?            the last screen
 export default function Home() {
   return (
@@ -111,6 +114,8 @@ export default function Home() {
           </Link>
         </Reveal>
       </section>
+
+      <ChristCosmic />
 
       <section className="px-4 pb-32 pt-16 sm:px-6">
         <Reveal className="mx-auto flex max-w-4xl flex-col items-start justify-between gap-8 border-t border-bone/[0.08] pt-14 md:flex-row md:items-end">

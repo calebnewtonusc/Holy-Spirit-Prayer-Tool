@@ -1,10 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Inter } from "next/font/google";
+import { Bricolage_Grotesque, Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-display",
+  display: "swap",
+});
+
+// Christ Cosmic, Erik's booklet, sets its headings in Cormorant Garamond.
+const cosmic = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-cosmic",
   display: "swap",
 });
 
@@ -34,7 +43,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable}`}>
+    <html lang="en" className={`${display.variable} ${cosmic.variable} ${body.variable}`}>
       <body className="font-sans">
         {children}
       </body>

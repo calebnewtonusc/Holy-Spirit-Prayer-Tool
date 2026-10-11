@@ -12,6 +12,11 @@ const config: Config = {
         bone: "rgb(var(--bone) / <alpha-value>)",
         ash: "rgb(var(--ash) / <alpha-value>)",
         smoke: "rgb(var(--smoke) / <alpha-value>)",
+        gold: {
+          DEFAULT: "rgb(var(--gold) / <alpha-value>)",
+          light: "rgb(var(--gold-light) / <alpha-value>)",
+        },
+        night: "rgb(var(--night) / <alpha-value>)",
         ember: {
           DEFAULT: "rgb(var(--ember) / <alpha-value>)",
           light: "rgb(var(--ember-light) / <alpha-value>)",
@@ -21,12 +26,14 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-body)", "ui-sans-serif", "system-ui", "sans-serif"],
         display: ["var(--font-display)", "var(--font-body)", "sans-serif"],
+        cosmic: ["var(--font-cosmic)", "Georgia", "serif"],
       },
       animation: {
         "fade-in": "fadeIn 0.8s ease-out both",
         "fade-up": "fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both",
         breathe: "breathe 6s ease-in-out infinite",
         breath: "breath 8s ease-in-out infinite",
+        twinkle: "twinkle 5s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: { "0%": { opacity: "0" }, "100%": { opacity: "1" } },
@@ -37,6 +44,10 @@ const config: Config = {
         breath: {
           "0%, 100%": { transform: "scale(0.55)", opacity: "0.35" },
           "50%": { transform: "scale(1)", opacity: "1" },
+        },
+        twinkle: {
+          "0%, 100%": { opacity: "0.35" },
+          "50%": { opacity: "1" },
         },
         breathe: {
           "0%, 100%": { transform: "scale(1)", opacity: "0.8" },

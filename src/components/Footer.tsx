@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CHRIST_COSMIC_PDF } from "@/components/ChristCosmic";
 
 export default function Footer() {
   return (
@@ -29,11 +30,19 @@ export default function Footer() {
             </p>
             <p className="mt-1.5 text-xs text-smoke">A free ministry tool. Take it to your campus, your small group, your friends.</p>
           </div>
-          <div className="flex items-center gap-6 text-sm text-ash">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-ash">
             <Link href="/journey" className="transition hover:text-bone">Pray</Link>
             <Link href="/guide" className="transition hover:text-bone">Lead a friend</Link>
             <Link href="/questions" className="transition hover:text-bone">Questions</Link>
             <Link href="/follow-up" className="transition hover:text-bone">7-day plan</Link>
+            <a
+              href={CHRIST_COSMIC_PDF}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gold transition hover:text-gold-light"
+            >
+              Christ Cosmic
+            </a>
           </div>
         </div>
         <p className="mx-auto mt-10 max-w-2xl border-t border-bone/[0.06] pt-8 text-center text-xs leading-relaxed text-smoke">
