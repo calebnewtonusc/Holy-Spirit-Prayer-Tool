@@ -35,18 +35,22 @@ export default function ChristCosmic() {
   return (
     <section
       id="christ-cosmic"
-      className="relative isolate overflow-hidden bg-night px-4 pb-28 pt-28 sm:px-6 sm:pb-36 sm:pt-36"
+      className="relative isolate overflow-hidden px-4 pb-[46vh] pt-28 sm:px-6 sm:pb-[52vh] sm:pt-36"
     >
-      <Image
-        src="/christ-cosmic/playa.webp"
-        alt=""
-        fill
-        sizes="100vw"
-        className="-z-20 object-cover object-bottom opacity-70"
-      />
-      <div className="cosmic-stars pointer-events-none absolute inset-0 -z-10 animate-twinkle motion-reduce:animate-none" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-56 bg-gradient-to-b from-ink to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[38%] bg-gradient-to-t from-night via-night/50 to-transparent" />
+      {/* On a phone the art keeps its own shape at the bottom; stretched to
+          the whole section it zoomed in until the camp lights went soft. */}
+      <div className="absolute inset-x-0 bottom-0 -z-20 aspect-[1004/1457] sm:inset-0 sm:aspect-auto">
+        <Image
+          src="/christ-cosmic/playa.webp"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-bottom opacity-80"
+        />
+        <div className="absolute inset-x-0 top-0 h-1/3 bg-gradient-to-b from-ink to-transparent sm:hidden" />
+      </div>
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[45%] bg-gradient-to-b from-ink via-ink/70 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-ink to-transparent" />
 
       <div className="mx-auto grid max-w-6xl items-center gap-14 md:grid-cols-[1.15fr_0.85fr] md:gap-10">
         <Reveal>
@@ -125,10 +129,10 @@ export default function ChristCosmic() {
             The guide opens your prayer time with these three breaths.
           </p>
         </Reveal>
-        <div className="mt-12 grid gap-4 md:grid-cols-3">
+        <div className="mt-14 grid divide-y divide-gold/15 border-y border-gold/15 md:grid-cols-3 md:divide-x md:divide-y-0">
           {BREATHS.map((breath, i) => (
             <Reveal key={breath.word}>
-              <div className="flex h-full flex-col rounded-2xl border border-gold/15 bg-night/55 p-7 backdrop-blur-md transition duration-300 hover:-translate-y-1 hover:border-gold/40 hover:bg-night/70">
+              <div className="flex h-full flex-col px-2 py-10 md:px-8">
                 <div className="flex items-center gap-3">
                   <span className="grid h-8 w-8 place-items-center rounded-full border border-gold/50 font-cosmic text-base text-gold">
                     {i + 1}
@@ -143,7 +147,7 @@ export default function ChristCosmic() {
                 <p className="mt-3 text-xs uppercase tracking-[0.18em] text-smoke">
                   {breath.ref}
                 </p>
-                <div className="mt-6 border-t border-gold/15 pt-5 font-cosmic text-2xl italic leading-tight text-gold-light">
+                <div className="mt-7 font-cosmic text-2xl italic leading-tight text-gold-light">
                   {breath.response.map((line) => (
                     <p key={line}>{line}</p>
                   ))}

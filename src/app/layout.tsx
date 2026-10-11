@@ -1,17 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Cormorant_Garamond, Inter } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
+import CosmicSky from "@/components/CosmicSky";
 import "./globals.css";
 
-const display = Bricolage_Grotesque({
-  subsets: ["latin"],
-  variable: "--font-display",
-  display: "swap",
-});
-
-// Christ Cosmic, Erik's booklet, sets its headings in Cormorant Garamond.
+// Christ Cosmic, Erik's booklet, sets its headings in Cormorant Garamond, so
+// every heading on the site does too.
 const cosmic = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["500", "600"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-cosmic",
   display: "swap",
@@ -36,15 +32,16 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0c0806",
+  themeColor: "#05060e",
   width: "device-width",
   initialScale: 1,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${cosmic.variable} ${body.variable}`}>
+    <html lang="en" className={`${cosmic.variable} ${body.variable}`}>
       <body className="font-sans">
+        <CosmicSky />
         {children}
       </body>
     </html>

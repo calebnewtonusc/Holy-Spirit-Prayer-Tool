@@ -5,6 +5,7 @@ import Flame from "@/components/Flame";
 import StoryScene from "@/components/StoryScene";
 import Reveal from "@/components/Reveal";
 import ChristCosmic from "@/components/ChristCosmic";
+import Halo from "@/components/Halo";
 
 // Reader: a Christian, often a student, who heard about this from a friend or
 // from Erik and is curious and a little nervous. Their questions, in order,
@@ -27,11 +28,12 @@ export default function Home() {
         </div>
         <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-24 bg-gradient-to-t from-ink to-transparent" />
 
-        <p className="kicker animate-fade-up [animation-delay:900ms]">
+        <Halo className="absolute left-1/2 top-[44%] -z-10 aspect-square w-[min(118vw,860px)] -translate-x-1/2 -translate-y-1/2 animate-fade-in opacity-40 [animation-delay:400ms] [animation-duration:2.4s]" />
+        <p className="kicker max-w-[19rem] animate-fade-up leading-relaxed [animation-delay:900ms] sm:max-w-none">
           A voice guide from Erik Fish&apos;s teaching
         </p>
-        <h1 className="mt-7 max-w-5xl animate-fade-up font-display text-[clamp(3.4rem,11vw,8.5rem)] font-normal leading-[0.92] tracking-[-0.045em] text-bone [animation-delay:1100ms]">
-          Ask for <span className="text-ember-light">the fire.</span>
+        <h1 className="mt-7 max-w-5xl animate-fade-up font-display text-[clamp(3.8rem,12vw,9.5rem)] font-medium leading-[0.9] tracking-[-0.01em] text-bone [animation-delay:1100ms]">
+          Ask for <span className="italic text-gold-light [text-shadow:0_0_50px_rgb(var(--gold)/0.45)]">the fire.</span>
         </h1>
         <p className="mt-6 max-w-lg animate-fade-up text-[17px] leading-relaxed text-ash [animation-delay:1300ms] sm:text-lg">
           Talk out loud with a calm guide as you ask Jesus for the baptism of
@@ -80,7 +82,7 @@ export default function Home() {
       <section className="relative isolate overflow-hidden px-4 pb-24 pt-28 text-center sm:px-6 sm:pt-36">
         <Reveal className="mx-auto max-w-3xl">
           <p className="kicker">Acts 2:3</p>
-          <p className="mt-7 font-display text-[clamp(2rem,5.4vw,4.2rem)] font-normal leading-[1.04] tracking-[-0.035em] text-bone">
+          <p className="mt-7 font-display text-[clamp(2rem,5.4vw,4.2rem)] font-normal leading-[1.04] tracking-[-0.01em] text-bone">
             Tongues of fire came to rest on{" "}
             <span className="text-ember-light">each of them.</span>
           </p>
@@ -93,7 +95,7 @@ export default function Home() {
           <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-ink to-transparent" />
         </div>
         <Reveal className="relative mx-auto -mt-6 max-w-xl">
-          <h2 className="font-display text-3xl font-normal tracking-[-0.02em] text-bone sm:text-4xl">
+          <h2 className="font-display text-3xl font-normal tracking-[-0.01em] text-bone sm:text-4xl">
             Then you walk the next person through it.
           </h2>
           <p className="mx-auto mt-4 max-w-md text-[17px] leading-relaxed text-ash">
@@ -120,7 +122,7 @@ export default function Home() {
       <section className="px-4 pb-32 pt-16 sm:px-6">
         <Reveal className="mx-auto flex max-w-4xl flex-col items-start justify-between gap-8 border-t border-bone/[0.08] pt-14 md:flex-row md:items-end">
           <div>
-            <h2 className="font-display text-4xl font-normal tracking-[-0.03em] text-bone sm:text-5xl">
+            <h2 className="font-display text-4xl font-normal tracking-[-0.01em] text-bone sm:text-5xl">
               Your turn.
             </h2>
             <p className="mt-3 max-w-sm text-[17px] text-ash">

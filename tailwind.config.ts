@@ -25,7 +25,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-body)", "ui-sans-serif", "system-ui", "sans-serif"],
-        display: ["var(--font-display)", "var(--font-body)", "sans-serif"],
+        display: ["var(--font-cosmic)", "Georgia", "serif"],
         cosmic: ["var(--font-cosmic)", "Georgia", "serif"],
       },
       animation: {
@@ -33,7 +33,6 @@ const config: Config = {
         "fade-up": "fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both",
         breathe: "breathe 6s ease-in-out infinite",
         breath: "breath 8s ease-in-out infinite",
-        twinkle: "twinkle 5s ease-in-out infinite",
       },
       keyframes: {
         fadeIn: { "0%": { opacity: "0" }, "100%": { opacity: "1" } },
@@ -44,10 +43,6 @@ const config: Config = {
         breath: {
           "0%, 100%": { transform: "scale(0.55)", opacity: "0.35" },
           "50%": { transform: "scale(1)", opacity: "1" },
-        },
-        twinkle: {
-          "0%, 100%": { opacity: "0.35" },
-          "50%": { opacity: "1" },
         },
         breathe: {
           "0%, 100%": { transform: "scale(1)", opacity: "0.8" },

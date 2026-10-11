@@ -211,7 +211,7 @@ export default function StoryScene() {
                         : "translate-y-4 opacity-0"
                   }`}
                 >
-                  <h2 className="max-w-lg font-display text-[clamp(1.9rem,4.4vw,3.25rem)] font-normal leading-[1.05] tracking-[-0.03em] text-bone">
+                  <h2 className="max-w-lg font-display text-[clamp(1.9rem,4.4vw,3.25rem)] font-normal leading-[1.05] tracking-[-0.01em] text-bone">
                     {b.big}
                   </h2>
                   <p className="mt-3 max-w-md text-[16px] leading-relaxed text-ash sm:text-[17px]">

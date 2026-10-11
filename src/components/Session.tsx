@@ -29,6 +29,37 @@ const COPY: Record<
   },
 };
 
+// Erik's first try on 2026-10-10 was Chrome on his iPhone. It refused the mic
+// and the page said "allow it in your browser", which on iOS points nowhere:
+// Chrome and Safari there take the switch from iOS Settings or the aA menu.
+// Festival friends mostly open links inside Instagram, whose browser has no
+// microphone at all, so that case gets named before they tap.
+const IN_APP = /Instagram|FBAN|FBAV|FB_IAB|Line\/|TikTok|musical_ly|Bytedance|LinkedInApp|Snapchat|Twitter/i;
+
+function isIos(): boolean {
+  const ua = navigator.userAgent;
+  return /iPhone|iPad|iPod/.test(ua) || (ua.includes("Mac") && navigator.maxTouchPoints > 1);
+}
+
+function inAppBrowser(): boolean {
+  return typeof navigator !== "undefined" && IN_APP.test(navigator.userAgent);
+}
+
+function micError(err: unknown): string {
+  const name = err instanceof DOMException ? err.name : "";
+  if (inAppBrowser() || !navigator.mediaDevices?.getUserMedia) {
+    return "This app's browser can't use your microphone. Tap the menu and open this page in Safari or Chrome.";
+  }
+  if (name === "NotFoundError") return "No microphone found. Try your phone, or plug in headphones with a mic.";
+  if (name === "NotReadableError") return "Another app is using your microphone. Close it, then tap Begin again.";
+  if (isIos()) {
+    return /CriOS/.test(navigator.userAgent)
+      ? "Chrome can't hear you yet. Open iPhone Settings, tap Chrome, turn on Microphone, then come back and tap Begin."
+      : "Safari can't hear you yet. Tap aA in the address bar, then Website Settings, set Microphone to Allow, and tap Begin.";
+  }
+  return "Your browser blocked the microphone. Click the icon at the left of the address bar, allow the microphone, and try again.";
+}
+
 export default function Session({ mode }: SessionProps) {
   return (
     <ConversationProvider>
@@ -44,6 +75,7 @@ function SessionInner({ mode }: SessionProps) {
   const [seconds, setSeconds] = useState(0);
   const [praying, setPraying] = useState(false);
   const [shared, setShared] = useState(false);
+  const [inApp, setInApp] = useState(false);
   const wakeLock = useRef<WakeLockSentinel | null>(null);
   const copy = COPY[mode];
 
@@ -64,6 +96,8 @@ function SessionInner({ mode }: SessionProps) {
       );
     },
   });
+
+  useEffect(() => setInApp(inAppBrowser()), []);
 
   const conversationRef = useRef(conversation);
   conversationRef.current = conversation;
@@ -134,13 +168,14 @@ function SessionInner({ mode }: SessionProps) {
     setCaption("");
     setSeconds(0);
     setPhase("connecting");
+    // The probe only raises the permission prompt. It is released at once:
+    // on iOS a second capture mutes the first, and the SDK opens its own.
     try {
-      await navigator.mediaDevices.getUserMedia({ audio: true });
-    } catch {
+      const probe = await navigator.mediaDevices.getUserMedia({ audio: true });
+      probe.getTracks().forEach((track) => track.stop());
+    } catch (e) {
       setPhase("ready");
-      setError(
-        "The guide needs your microphone. Allow it in your browser, then try again.",
-      );
+      setError(micError(e));
       return;
     }
     try {
@@ -182,7 +217,7 @@ function SessionInner({ mode }: SessionProps) {
   if (live) {
     return (
       <div
-        className="fixed inset-0 z-50 flex flex-col bg-ink animate-fade-in"
+        className="fixed inset-0 z-50 flex flex-col bg-ink/80 animate-fade-in"
         role="dialog"
         aria-label="Prayer session"
       >
@@ -270,7 +305,7 @@ function SessionInner({ mode }: SessionProps) {
     return (
       <div className="text-center animate-fade-up">
         <p className="kicker">Session complete</p>
-        <h3 className="mt-4 font-display text-3xl font-normal tracking-[-0.02em] text-bone sm:text-4xl">
+        <h3 className="mt-4 font-display text-3xl font-normal tracking-[-0.01em] text-bone sm:text-4xl">
           {copy.ended}
         </h3>
         <p className="mx-auto mt-4 max-w-md text-ash">
@@ -313,7 +348,7 @@ function SessionInner({ mode }: SessionProps) {
 
   return (
     <div className="text-center">
-      <h3 className="font-display text-3xl font-normal tracking-[-0.02em] text-bone">
+      <h3 className="font-display text-3xl font-normal tracking-[-0.01em] text-bone">
         {copy.ready}
       </h3>
       <p className="mx-auto mt-3 max-w-sm leading-relaxed text-ash">
@@ -322,7 +357,7 @@ function SessionInner({ mode }: SessionProps) {
       {error && (
         <p
           role="alert"
-          className="mx-auto mt-6 max-w-sm rounded-2xl border border-ember/30 bg-ember/10 px-5 py-3 text-sm text-ember-light"
+          className="mx-auto mt-6 max-w-sm text-[15px] leading-relaxed text-gold-light"
         >
           {error}
         </p>
@@ -336,7 +371,9 @@ function SessionInner({ mode }: SessionProps) {
         {copy.start}
       </button>
       <p className="mt-4 text-xs text-smoke">
-        Uses your microphone. Works best in Chrome or Safari.
+        {inApp
+          ? "This app's browser can't use the microphone. Open this page in Safari or Chrome first."
+          : "Uses your microphone. Works in Safari and Chrome."}
       </p>
     </div>
   );

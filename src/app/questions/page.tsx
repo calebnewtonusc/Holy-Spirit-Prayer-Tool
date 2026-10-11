@@ -16,7 +16,7 @@ export default function QuestionsPage() {
       <main className="px-4 pb-28 pt-28 sm:px-6 sm:pt-36">
         <div className="mx-auto max-w-2xl">
           <p className="kicker">Nervous is normal</p>
-          <h1 className="mt-6 font-display text-5xl font-normal tracking-[-0.03em] text-bone sm:text-6xl">
+          <h1 className="mt-6 font-display text-5xl font-normal tracking-[-0.01em] text-bone sm:text-6xl">
             The questions people ask first.
           </h1>
           <p className="mt-5 max-w-lg text-[17px] leading-relaxed text-ash">

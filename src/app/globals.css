@@ -3,15 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --ink: 12 8 6;
-  --coal: 22 16 12;
-  --char: 32 24 19;
-  --line: 60 46 37;
-  --bone: 246 238 228;
-  --ash: 190 175 160;
-  --smoke: 128 114 102;
-  --ember: 232 120 44;
-  --ember-light: 255 176 102;
+  /* The night of the Christ Cosmic booklet. The fire keeps its own colors in
+     Flame.tsx; ember here is only the warm accent on buttons and glows. */
+  --ink: 5 6 14;
+  --coal: 13 14 28;
+  --char: 22 22 40;
+  --line: 48 46 72;
+  --bone: 246 239 228;
+  --ash: 184 180 198;
+  --smoke: 124 120 144;
+  --ember: 232 140 54;
+  --ember-light: 250 208 140;
   --ember-deep: 150 52 18;
   /* Christ Cosmic booklet: the gold of its headings and its night sky. */
   --gold: 236 168 64;
@@ -19,29 +21,14 @@
   --night: 6 7 18;
 }
 
-/* A fixed field of small stars over the Christ Cosmic sky. Layered radial
-   gradients so it costs no images and no script. */
-.cosmic-stars {
-  background-image:
-    radial-gradient(1px 1px at 12% 18%, rgb(255 255 255 / 0.9), transparent 60%),
-    radial-gradient(1px 1px at 27% 42%, rgb(255 240 210 / 0.7), transparent 60%),
-    radial-gradient(1.5px 1.5px at 41% 12%, rgb(255 255 255 / 0.85), transparent 60%),
-    radial-gradient(1px 1px at 58% 30%, rgb(220 225 255 / 0.8), transparent 60%),
-    radial-gradient(1px 1px at 73% 9%, rgb(255 255 255 / 0.7), transparent 60%),
-    radial-gradient(1.5px 1.5px at 86% 36%, rgb(255 230 190 / 0.8), transparent 60%),
-    radial-gradient(1px 1px at 93% 21%, rgb(255 255 255 / 0.6), transparent 60%),
-    radial-gradient(1px 1px at 6% 55%, rgb(220 225 255 / 0.6), transparent 60%),
-    radial-gradient(1px 1px at 66% 52%, rgb(255 255 255 / 0.5), transparent 60%),
-    radial-gradient(1px 1px at 34% 64%, rgb(255 255 255 / 0.4), transparent 60%);
-  background-size: 520px 420px;
-}
 
 /* The background lives on html so the story's fixed fire (z-index -10) can
    paint above it; a body background would cover it. */
 html {
   scroll-behavior: smooth;
   background:
-    radial-gradient(120% 70% at 50% -10%, rgb(var(--ember-deep) / 0.22), transparent 60%),
+    radial-gradient(90% 60% at 50% -20%, rgb(70 50 140 / 0.28), transparent 70%),
+    radial-gradient(80% 50% at 50% 115%, rgb(var(--ember-deep) / 0.22), transparent 70%),
     rgb(var(--ink));
   background-attachment: fixed;
 }
@@ -78,7 +65,7 @@ body::after {
 }
 
 .scripture-text {
-  font-family: var(--font-display);
+  font-family: var(--font-cosmic);
   font-weight: 400;
   letter-spacing: -0.01em;
 }
@@ -98,5 +85,5 @@ body::after {
 }
 
 .kicker {
-  @apply inline-flex items-center gap-2 rounded-full border border-ember/25 bg-ember/10 px-3.5 py-1 text-[13px] font-medium text-ember-light;
+  @apply inline-block font-display text-[13px] font-semibold uppercase tracking-[0.32em] text-gold;
 }
