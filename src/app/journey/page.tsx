@@ -9,14 +9,6 @@ export const metadata: Metadata = {
   description: "A voice-guided session asking Jesus for the baptism of the Holy Spirit.",
 };
 
-const EXPECT = [
-  ["Settle in", "The guide checks you're somewhere quiet and asks where you are with Jesus."],
-  ["Scripture", "Jesus' promise in Luke 11, Pentecost in Acts 2, and Paul on praying with your spirit."],
-  ["Questions", "Anything you're afraid of or unsure about, said out loud and answered."],
-  ["The prayer", "You ask your Father for the Holy Spirit, phrase by phrase."],
-  ["Practice", "You stop praying in English and let whatever comes, come. The guide waits quietly."],
-  ["What next", "How to keep going daily, and who to tell."],
-] as const;
 
 export default function JourneyPage() {
   return (
@@ -42,22 +34,15 @@ export default function JourneyPage() {
             </div>
           </div>
 
-          <div className="mt-6 text-center">
+          <div className="mx-auto mt-4 max-w-xl text-center">
             <p className="kicker">What happens</p>
+            <p className="mt-6 font-display text-2xl leading-snug text-bone/90">
+              The guide checks you&apos;re somewhere quiet and asks where you are with Jesus. It reads His promise in
+              Luke 11, Pentecost in Acts 2 and Paul on praying with your spirit, and answers anything you&apos;re
+              afraid of. Then you ask your Father for the Holy Spirit, phrase by phrase, and stop praying in English
+              while the guide waits quietly. It ends with how to keep going, and who to tell.
+            </p>
           </div>
-          <ol className="mt-8 divide-y divide-bone/[0.07] border-y border-bone/[0.07]">
-            {EXPECT.map(([title, body], i) => (
-              <li key={title} className="flex gap-6 py-5">
-                <span className="w-6 shrink-0 font-display text-lg italic text-gold">
-                  {i + 1}
-                </span>
-                <div>
-                  <p className="font-display text-xl text-bone">{title}</p>
-                  <p className="mt-1 text-sm leading-relaxed text-ash">{body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
         </div>
       </main>
       <Footer />

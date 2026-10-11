@@ -3,6 +3,7 @@ import Link from "next/link";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { followUpPlans } from "@/data/content";
+import WeekStars from "@/components/WeekStars";
 
 export const metadata: Metadata = {
   title: "7-day plan | Ask for the Fire",
@@ -66,29 +67,9 @@ export default function FollowUpPage() {
 
           <section className="mt-16">
             <p className="kicker">The week after</p>
-            <ol className="mt-6 divide-y divide-bone/[0.07] border-y border-bone/[0.07]">
-              {sevenDay.map((day) => (
-                <li
-                  key={day.day}
-                  className="grid grid-cols-[2.5rem_1fr] gap-x-4 py-6"
-                >
-                  <span className="font-display text-2xl italic text-gold/80">
-                    {day.day}
-                  </span>
-                  <div>
-                    <h3 className="font-display text-xl text-bone">
-                      {day.title}
-                    </h3>
-                    <p className="mt-2 font-display text-lg leading-snug text-ash">
-                      &ldquo;{day.scripture.text}&rdquo;{" "}
-                      <span className="whitespace-nowrap font-sans text-xs uppercase tracking-[0.18em] text-smoke">
-                        {day.scripture.ref}
-                      </span>
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
+            <div className="mt-10">
+              <WeekStars days={sevenDay} />
+            </div>
           </section>
 
           <section className="mt-28 text-center">
