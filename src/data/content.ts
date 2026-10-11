@@ -416,7 +416,7 @@ export const guideSteps = [
     step: 2,
     title: "Confirm their foundation",
     instructions:
-      "Ask: 'Do you follow Jesus? Have you personally placed your faith in Him?' If they're unsure or want a refresher, walk through the gospel together. Someone who is genuinely attached to Jesus, who has repented, believed, and is following Him, already has the Holy Spirit. This is not an elite tier of Christianity. God loves it when His kids ask for more.",
+      "Ask: 'Do you follow Jesus? Have you personally placed your faith in Him?' If they're unsure or want a refresher, walk through the gospel together. For a seeker, burner, or spiritual-but-not-religious friend, read Erik's Christ Cosmic booklet (christcosmic.org) with them: the Mystery became visible in Jesus, and His invitation still echoes through the cosmos: come follow Me, come into the Light, come home. Someone who is genuinely attached to Jesus, who has repented, believed, and is following Him, already has the Holy Spirit. This is not an elite tier of Christianity. God loves it when His kids ask for more.",
     caution: "Don't assume. A clear foundation matters more than speed.",
   },
   {
@@ -443,7 +443,7 @@ export const guideSteps = [
     step: 6,
     title: "Prepare the heart",
     instructions:
-      "Lead a short time of quiet. Read Philippians 4:6-7 slowly. Let them breathe and focus on Jesus, not the outcome. Pray the surrender prayer together. Let silence be part of the moment.",
+      "Lead Christ Cosmic's three-step breath ceremony. Breathe (Genesis 2:7): 'Thank you for life. I am loved.' Release (Matthew 11:28): 'Christ, I come. I let it go.' Listen (John 10:27): 'Christ the Savior. I am listening.' One slow breath each, then sit in stillness. Let them focus on Jesus, not the outcome. Let silence be part of the moment.",
     caution: "Don't fill silence too quickly. Let them settle.",
   },
   {

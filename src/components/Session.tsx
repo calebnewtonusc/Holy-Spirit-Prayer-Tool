@@ -210,7 +210,7 @@ function SessionInner({ mode }: SessionProps) {
                 <span className="absolute inset-0 animate-breath rounded-full border border-ember-light/40 bg-ember/10" />
                 <span className="h-2 w-2 rounded-full bg-ember-light" />
               </span>
-              <p className="font-display text-2xl text-bone/90 sm:text-3xl">Breathe in. Breathe out.</p>
+              <p className="font-display text-2xl text-bone/90 sm:text-3xl">Breathe in. You are loved.</p>
             </div>
           ) : (
             <p
